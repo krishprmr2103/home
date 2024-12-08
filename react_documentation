@@ -1,0 +1,310 @@
+step to create  a react js app:
+-->cd dektop/ disk where you want to make a project folder
+-->npm create vite
+-->y
+-->project foldername
+-->select react framwork
+-->js
+-->cd projectname
+-->npm install
+-->npm run dev
+===========================================================
+1)simple increment and decrement program. means make a counter 
+-----------------------------------------------------------
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+
+function App() {
+  // create  variable in react js : using useState
+  let [name, setname]=useState("Mr.Krish Parmar")
+  let [age, setage]=useState(20)
+
+
+  const name_changer =() =>{
+   setname("krish parmar")
+   setage(21)
+  }
+
+  const [num,setnum]=useState(0)
+  // const inc=()=>{setnum(num+1) }
+  // const dec=()=>{setnum(num-1) }
+ return (
+  <div>
+    <h2>hellow !,  My self {name}</h2>
+    <h2>and my age is {age}</h2>
+
+    <button onClick={name_changer} >click</button>
+    <br /><br />
+
+
+    <button onClick={()=>{setnum(num+1)}} >Increment</button>
+    <br /><br />
+    <button onClick={()=>{setnum(num-1)}} >Increment</button>
+    <h1>{num}</h1>
+  </div>
+ 
+)
+}
+
+export default App
+
+------------------------------------------------------
+Form Handling :-
+--------------->
+
+for example:-to stop the page reloading when the form is submit... means form handling
+
+import { useState } from 'react'
+import reactLogo from './assets/react.svg'
+import viteLogo from '/vite.svg'
+import './App.css'
+
+
+
+function App() {
+  // create  variable in react js : using useState
+  let [rno,setrno]=useState(10)  
+  let [sname,setsname]=useState("krish") 
+  let [marks,setmarks]=useState(90)
+  
+  
+const submitHandler =(e)=>{
+  e.preventDefault() //to stop the page reloading when the form is submit....
+  console.log("hellow !, Krish Parmar")
+}
+ return (
+  <div>
+    <form onSubmit={(e)=>{submitHandler(e)}} > {/*here make the fuction and call the other function  */} 
+      <input type="text" placeholder='enter your name ' /><br />
+      <button className='btn1'>Submit</button>
+    </form>
+  </div>
+ 
+)
+}
+
+export default App
+
+------------------------------------------------------------------------------------------------------------
+Two way binding :- with form handling...
+----------------->
+
+-->ubove code is direct interection ot the dom of web by client and it's probmelatics. how to intect with react through 
+	webpage and dom like input,button and more .
+
+
+	-->event.target.value : task.controll which on perform the task(event).value return by the task(event) 
+	----------------------->
+
+	---> event is the any task which perform on the particular tage. when i consol.log(event) means print it return the object of the task
+	--->target it return the whall control like input control etc.
+	--->value is value of the control.
+	insort --> event is task perform on the target (control) and value is the value return by the task
+
+
+	for exp: two way binding. means apde textbox ma lakhiye pan chhe and react ne khbr  pade chhe ke user task perform kare chhe so it's calledtwo way bindign.
+		
+		import { useState } from 'react'
+		import reactLogo from './assets/react.svg'
+		import viteLogo from '/vite.svg'
+		import './App.css'
+		function App() {
+  			let [username,setusername]=useState('')
+  			 const submitHandler = (e) => { e.preventDefault(); console.log("submited");console.log(username); setusername('')}
+ 			return (
+  			<div>
+    			<form  onSubmit={(e)=>{submitHandler(e)}} > 
+      			<input value={username}
+        			onChange={(event)=>{
+          				setusername(event.target.value)
+          				//console.log(event.target.value)
+        			}}	type="text" placeholder='enter your name '     /><br />
+      			<button className='btn1'>Submit</button>
+    			</form>
+  			</div>
+			)
+		}
+
+	export default App
+
+----------------------------------------------------------------------------------------------------
+//Fragements:- its empty tag. it in we can pass the multiple tags.  used when you not want to make div tag in pass multiple tag.
+---------------->
+	for exp :-
+		onst App =()=>{    
+    		return(
+        		<> // fragement 
+        			<h1></h1>
+				<div></div>
+        		</>
+    			)
+		}
+
+-------------------------------------------------------------------------------------------------------
+Class Component :-used for make reusable component. 
+------------->
+
+
+-------------------------------------------------------------------------------------------------------
+How to pass the data one componet to other component.
+
+------------------------------>
+for exp. :-
+	card.jsx :
+		import React from "react";
+		const Card =(props)=>{
+    			return(
+        			<>
+        			<h1>My card Name is :- {props.name}</h1>
+        			</>
+			)
+		}
+			export default Card
+
+	App.jsx :
+		import React from "react";
+		import Card from "./components/Card";
+		const App =()=>{	
+    			return(
+        			<>
+            			<Card name={'krish parmar'}/>
+            			<Card name={'MC Prince'}/>
+        			</>
+    			)
+		}
+			export default App
+
+----------------------------------------------------------------------------------------
+props drilling + rendering JSON data 
+--------------------------------------------
+
+props drilling means passing one data one component to another.
+rendering json data means use the the data  from the json object
+
+// example of to book selection frontend..
+_______________________
+app.jsx:
+_______________________
+import React from "react";
+import Card from "./components/Card";
+const App =()=>{
+    const book =[
+        {
+            'image':'./img/gui',
+            "bookname":"Python",
+            "author":"Miss Shreya Goshal",
+            "isavailable":'yes',
+            "price":233
+        },
+        {
+            "bookname":"JAVA SCRIPT",
+            "author":'Mr.Krish Parmar',
+            "isavailable":'yes',
+            "price":243
+        },
+        {
+            "bookname":"JAVA",
+            "author":"Sonu Nigam",
+            "isavailable":'yes',
+            "price":343
+        },
+        {
+            "bookname":"c++",
+            "author":'Darshan Raval',
+            "isavailable":'yes',
+            "price":100
+        }
+    ]
+    
+    return(
+        <>
+        {/* map function is used for create new array with callback function */}
+        {book.map((ele)=>{  //here, also we can use  the foreach function.
+            return <Card  bookname={ele.bookname} author={ele.author} isavailable={ele.isavailable} price={ele.price} />
+           })}
+
+        
+        </>
+    )
+}
+export default App
+_______________________
+Card.jsx=
+_______________________
+import React from "react";
+// import img from "./img"
+const Card =(props)=>{
+    const handle =(e)=>{
+        e.preventDefault();
+    }
+    return(
+        <>
+        {/*  "bookname":"Python",
+            "author":"Miss Shreya Goshal",
+            "isavaauthorilable":'yes',
+            "price":233 */}
+        <div className="card">
+            <form action="" onSubmit={(e)=>{handle(e)}}>
+                
+                <h1>BookName {props.bookname} </h1>
+                <h2> Author {props.author}</h2>
+                <h1>Available {props.isavailable}</h1>
+                <h1>Price {props.price}</h1>
+                    {/* <input type="button" name="inc" id="btn" value={"<"} />
+                    <input type="button" name="dec" id="btn" value={">"} /> */}
+                      
+                            
+                <button className="btn1">Add</button>
+            </form>
+        </div>
+        
+        </>
+    )
+}
+export default Card
+___________________
+index.css
+___________________
+
+body {margin: 0;font-family: Arial, sans-serif;
+}
+
+/* card */
+div{
+    padding: 20px;  display: flex;
+    border: 1px solid #ccc; border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    font-family: Arial, sans-serif; 
+    background-color: #f9f9f9;
+}
+.card { 
+    width: 400px; 
+    margin: 20px auto; padding: 20px;  margin-right: 10px;
+    border: 1px solid #ccc; border-radius: 10px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif; 
+    background-color: #f9f9f9; 
+}
+h1, h2 { margin: 10px 0; color: #333; }
+h1 {font-size: 1.5em;text-transform: capitalize;}
+h2 {font-size: 1.2em; font-weight: normal; color: #555; }
+.btn1 {
+    display: inline-block; padding: 10px 20px; 
+    font-size: 1em; color: #fff; 
+    background-color: #007BFF;
+    border: none; border-radius: 5px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+.btn1:hover { background-color: #0056b3; }
+#btn{ margin: 10px; }
+
+-----------------------------------------------------------------------------------------------------
+Integrating API(axios) : API is used for pass and display the  data from  the backend to fronend.
+
+axios : is tool , which help our to call the api.  it sould to install --> npm i axios
+
+-----------------------------------------
+ 
