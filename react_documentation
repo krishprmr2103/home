@@ -307,4 +307,216 @@ Integrating API(axios) : API is used for pass and display the  data from  the ba
 axios : is tool , which help our to call the api.  it sould to install --> npm i axios
 
 -----------------------------------------
- 
+for example : -
+
+ app.jsx:
+
+import axios from "axios";
+import React, { useState } from "react";
+const App =  () => {
+  const [data ,setdata]=useState([])
+  // here async await concept is used, it take wait unit the api data not comes.
+  // why used here, becuase api show the pending and next code of line going to run. it does not wait the api calling
+  const getData = async() => { //it wait until the proccess is not fullfiled
+  const response = await axios.get('https://picsum.photos/v2/list')
+  // to pass the data into the data variable :
+  setdata(response.data)
+  for(var i=0;i<30;i++){
+    console.log("", data[i].url) 
+  }
+  };
+  return (
+    <>
+      <div className="data-container">
+        <button className="getdata-button" onClick={getData}>get data</button>
+      </div>
+      <div className="data">
+          {data.map(function(elem ,idx){ //ind is used to take the new id to every pic.
+          return <div key={idx}   className="photo">  <img src={elem.url} alt="" /> </div>
+        })} 
+      </div>  
+    </>
+  );
+};
+export default App;
+
+
+index.css:-
+
+
+.data-container{
+    padding: 30px;
+    margin: 0 auto;
+
+  }
+/* Styling the button */
+.getdata-button {
+    background-color: #4CAF50; /* Green background */
+    color: white;            /* White text */
+    border: none;            /* No border */
+    padding: 10px 20px;      /* Padding */
+    text-align: center;      /* Centered text */
+    text-decoration: none;   /* No underline */
+    font-size: 16px;         /* Font size */
+    border-radius: 5px;      /* Rounded corners */
+    cursor: pointer;         /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+  }
+  
+  /* Hover effect */
+  .getdata-button:hover {
+    background-color: #45a049; /* Darker green */
+  }
+  .data{
+    width: 950px; height: max-content; padding: 20px;
+    margin: 30px;background-color: rgba(80, 4, 35, 0.795);
+  }
+  .photo{
+    color: black;
+    background-color: antiquewhite;
+    margin: 20px;
+     
+    /* width: 40px; */
+  }
+  .photo img{
+    height: fit-content;
+  }
+
+
+sortintro of the useEffect :  
+
+
+--->The useEffect Hook in React is a powerful tool for managing side effects in functional components. It allows you to perform operations such as fetching data,
+ subscribing to events, or updating the DOM in response to state or prop changes.
+--->used for calling the function and other task again and again.
+--->jyare apdi passe be task hoi tyare , main tsk ee run thatu hoi toh useeffect te task jode side tsk ne pan run karvanu ka kare chhe . banne tsk ne sathe run kare 
+	chhe like , apde game rammiye and sathe otp.
+--->usd for mounting and unmounting cocept  and lifecycle method and targetting the dom
+
+
+-------------------------------------------------------------------------------------------------
+
+React Router:-Routing in ReactJS refers to the process of directing users to different pages or views of a React
+		application based on their interactions or the URL path.
+_______________
+
+first install the router in react js :npm install react-router-dom
+
+
+then in the main.jsx rapped the <app />
+ by the <BouwserRouter></BouwserRouter>
+
+like this : <BouwserRouter><app /></BouwserRouter>
+
+then make the  <Routes></Routes>
+then include a <Route /> in the <Routes>
+
+
+whole example :
+--------------->
+app.jsx
+-------
+// import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Routes,Route } from "react-router-dom";
+
+import Header from "./components/Header.jsx";
+import About from "./components/About.jsx";
+import Contact from "./components/Contact.jsx"; // Corrected import
+import Books from "./components/Books.jsx";
+import Home from "./components/Home.jsx"; // New Home component;
+import Footer from "./components/Footer.jsx";
+import Content from "./components/Content.jsx";
+
+
+const App =  () => {
+  
+  return (
+    <>
+      <Header/>
+     
+      <div>
+        <Routes>
+        <Route path="/" element={<Home />} />
+          <Route path="/books" element={<Books />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
+      <Content/>
+
+      <Footer/> 
+    </>
+  );
+};
+export default App;
+
+
+Header.jsx
+---------------->
+
+
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Routes,Route,Link } from "react-router-dom";
+
+const Header =  () => {
+  return (
+    <>
+      
+      <header>
+            <div class="logo">Marvels Books Store</div>
+            <nav>
+                {/* <a className="nav-link" href="/">Home</a>
+                <a className="nav-link" href="/books">Books</a>
+                <a className="nav-link" href="/about">About</a>
+                <a className="nav-link" href="contact">About</a> */}
+                <Link className='nav-link' to='/'>Home</Link>
+                <Link className='nav-link' to='/books'>Books Catagory</Link>
+                <Link className='nav-link' to='/about'>About</Link>
+                <Link className='nav-link' to='/contact'>About</Link>
+           
+           </nav>
+        </header>
+    </>
+  );
+};
+export default Header;
+
+main.jsx
+---------------->
+
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import App from './App.jsx';
+import './index.css';
+// import './App.css';
+import { BrowserRouter } from 'react-router-dom';
+;
+
+// Create main root to a simple tag
+createRoot(document.getElementById('root')).render(
+    <BrowserRouter><App/></BrowserRouter>
+);
+
+
+Note:	Link:- the link tag is same as a <a><a> but it used where we want not refferce the  website when the page of is change by the Cliking n the link.
+	--->you should also import the Link Like this :-  import { Link } from "react-router-dom";
+
+		
+-------------------------------------------------------------------------------------------------
+context API:-
+
+
+//create an animation playlist in this bellow topics will be cover.
+
+
+--->redux toolkit
+--->Framer Motion
+--->Deployement
+--->useRef
+--->React Tostify
+
+
+
+
