@@ -626,6 +626,108 @@ function About() {
   }
   
   export default About;
+
+
+----------------------------------------------------------------------------------------------------------------------------------
+Books Card Exp :-
+
+App.jsx :
+---------->
+import React, { useContext } from "react";
+import { DataContext } from "./context/UserContext";
+import Footer from "./components/Footer";
+
+const App = () => {
+  const books = useContext(DataContext); // Correctly retrieve the books array from context
+
+  return (
+    <>
+      <header>
+        <div className="logo">Marvels Books Store</div>
+        <nav></nav>
+      </header>
+      <main>
+        <div className="book-page">
+          <h1 className="book-title">Book List</h1>
+          <div className="book-list">
+            {books.map((book, index) => (
+              <div className="book-card" key={index}>
+                <h2>{book.title}</h2>
+                <h3>by written {book.author}</h3>
+                <h3> {book.genre}</h3>
+                <h1> {book.price}</h1>
+                <h1> {book.available}</h1>
+                <button className="btn1">Add to Card </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </>
+  );
+};
+
+export default App;
+
+UserContext:- it is centreliced in between the all component/file. 
+--------------->
+
+import React, { createContext } from "react";
+
+export const DataContext = createContext();
+
+const UserContext = ({ children }) => {
+  const books = [
+    {
+      id: 1,
+      title: "To Kill a Mockingbird",
+      author: "Harper Lee",
+      genre: "Classic Fiction",
+      price: 15.99,
+      available: true,
+    },
+    {
+      id: 2,
+      title: "1984",
+      author: "George Orwell",
+      genre: "Dystopian",
+      price: 12.99,
+      available: true,
+    },
+    {
+      id: 3,
+      title: "The Great Gatsby",
+      author: "F. Scott Fitzgerald",
+      genre: "Classic Fiction",
+      price: 10.99,
+      available: false,
+    },
+    {
+      id: 4,
+      title: "Becoming",
+      author: "Michelle Obama",
+      genre: "Biography",
+      price: 18.99,
+      available: true,
+    },
+    {
+      id: 5,
+      title: "The Catcher in the Rye",
+      author: "J.D. Salinger",
+      genre: "Classic Fiction",
+      price: 13.99,
+      available: true,
+    },
+  ];
+  
+
+  return <DataContext.Provider value={books}>{children}</DataContext.Provider>;
+};
+
+export default UserContext;
+
+
   
 
 
